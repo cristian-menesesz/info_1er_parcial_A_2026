@@ -27,7 +27,9 @@ def get_angle_radians(point_a: Point2D, point_b: Point2D) -> float:
     ### ---------------------- ###
     ### SU IMPLEMENTACION AQUI ###
     ### ---------------------- ###
-    return 0.0
+    dx = point_b.x - point_a.x
+    dy = point_b.y - point_a.y
+    return math.atan2(dy, dx)
 
 
 def get_distance(point_a: Point2D, point_b: Point2D) -> float:
@@ -37,7 +39,9 @@ def get_distance(point_a: Point2D, point_b: Point2D) -> float:
     ### ---------------------- ###
     ### SU IMPLEMENTACION AQUI ###
     ### ---------------------- ###
-    return 0.0
+    dx = point_b.x - point_a.x
+    dy = point_b.y - point_a.y
+    return math.sqrt(dx * dx + dy * dy)
 
 
 def get_impulse_vector(start_point: Point2D, end_point: Point2D) -> ImpulseVector:
@@ -63,4 +67,9 @@ def get_impulse_vector(start_point: Point2D, end_point: Point2D) -> ImpulseVecto
     ### ---------------------- ###
     ### SU IMPLEMENTACION AQUI ###
     ### ---------------------- ###
-    return ImpulseVector(0, 0)
+    # El angulo va de end_point hacia start_point (direccion opuesta al arrastre)
+    angle = get_angle_radians(end_point, start_point)
+    # La magnitud del impulso es la distancia entre ambos puntos
+    impulse = get_distance(start_point, end_point)
+    logger.debug(f"ImpulseVector -> angle={math.degrees(angle):.1f} deg, impulse={impulse:.1f} px")
+    return ImpulseVector(angle, impulse)
